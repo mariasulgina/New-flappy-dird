@@ -238,8 +238,13 @@ class FlappyGame:
             score_text = self.font.render('Счёт: ' + str(self.score), True, self.white)  # cxtn d ntxtybt buhs
             self.screen.blit(score_text, (10, self.height - 30))
 
+        # Рисуем фигуры - квадраты
         for shape in self.falling_shapes:
             shape.draw(self.screen)
+
+        # Проверяем, не превышает ли позиция птицы верхнюю границу экрана
+        if self.playy < 0:
+            self.playy = 0
 
     def falling_shapes_f(self):
         if random.randint(1, 100) < 2:  # Вероятность создания новой фигуры
@@ -263,6 +268,9 @@ class FlappyGame:
             if event.key == pygame.K_SPACE and not self.game_over:
                 self.y_change = -self.jump_height
                 self.flap_wings()
+                if self.playy > 0:  # Проверяем, не превышает ли позиция птицы верхнюю границу экрана
+                    self.y_change = -self.jump_height
+                    self.flap_wings()
             if event.key == pygame.K_SPACE and self.game_over:
                 self.reset_game()
 
@@ -332,7 +340,7 @@ class FlappyGame:
             top3 = pygame.draw.rect(self.screen, self.white1, [self.obst[i] - 4, y_coord - 20, 38, 20], 2, 5)
             top4 = pygame.draw.rect(self.screen, self.white1, [self.obst[i] - 4, y_coord + self.id1, 38, 20], 2, 5)
 
-            if top_rect.colliderect(self.player) or bot_rect.colliderect(self.player) or self.playy < 0:
+            if top_rect.colliderect(self.player) or bot_rect.colliderect(self.player):
                 self.game_over = True
 
             # Рисую звезды
