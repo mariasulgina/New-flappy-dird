@@ -332,7 +332,7 @@ class FlappyGame:
             top3 = pygame.draw.rect(self.screen, self.white1, [self.obst[i] - 4, y_coord - 20, 38, 20], 2, 5)
             top4 = pygame.draw.rect(self.screen, self.white1, [self.obst[i] - 4, y_coord + self.id1, 38, 20], 2, 5)
 
-            if top_rect.colliderect(self.player) or bot_rect.colliderect(self.player):
+            if top_rect.colliderect(self.player) or bot_rect.colliderect(self.player) or self.playy < 0:
                 self.game_over = True
 
             # Рисую звезды
